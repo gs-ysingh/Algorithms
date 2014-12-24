@@ -8,8 +8,8 @@
 		var finalStr = '';
 		var finalArray = [];
 		for(var i = 0; i < arg.length; i++) {
-			if(typeof obj[arg[i]] === 'undefined') {
-				obj[arg[i]] = true;
+			if(typeof obj['' + arg[i]] === 'undefined') {
+				obj['' + arg[i]] = true;
 				typeof(arg) === "string" ? finalStr += arg[i] : finalArray.push(arg[i]);
 			}
 		}
