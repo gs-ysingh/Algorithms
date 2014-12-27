@@ -69,4 +69,75 @@
 		});
 		return finalArray;
 	}
+
+	Algorithms.prototype.factorial = function () {
+		var arg = arguments[0];
+		var result;
+		if(arg > -1) {				
+			if(arg === 0 || arg === 1) {
+				result  = 1;
+			}
+			else {
+				result = arg * (Algorithms.prototype.factorial(arg - 1));
+			}
+			return result;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	Algorithms.prototype.generateStringsNlengthKcombinations = function () {
+		var arg = arguments[0];
+		var n = arguments[1];
+		var k = arguments[2];
+		if(n == 0) {
+			console.log(arg);
+		}
+		else {
+			for(var i = 0; i < k; i++) {
+				arg[n - 1] = i;
+				Algorithms.prototype.generateStringsNlengthKcombinations(arg, n - 1, k);
+			}			
+		}		
+	}	
+
+	Algorithms.prototype.towerOfHanoi = function(n, source, auxiliary, destination) {
+		if(n == 1) {
+			console.log('move from ' + source + ' to ' + destination); 
+		}
+		else {
+			Algorithms.prototype.towerOfHanoi(n - 1, source, destination, auxiliary);
+			console.log('move from ' + source + ' to ' + destination); 
+			Algorithms.prototype.towerOfHanoi(n - 1, auxiliary, source, destination);
+		}
+	}
+
+	Algorithms.prototype.reverse = function(str) {
+		var reversedString = '';
+		if(str) {
+			reversedString =  str.slice(str.length - 1) + Algorithms.prototype.reverse(str.substring(0, str.length - 1));
+		}
+		else {
+			return '';
+		}
+		return reversedString;
+	}
+
+	Algorithms.prototype.isPalindrome = function() {
+		var arg = arguments[0];
+		if(arg === this.reverse(arg)) {
+			return true;
+		}
+		return false;
+	}
+
+	Algorithms.prototype.isRotations = function(str1, str2) {
+		var temp = str1 + str1;
+		if(temp.indexOf(str2) !== -1) {
+			return true;
+		}
+		return false;
+	}
+
 }());
