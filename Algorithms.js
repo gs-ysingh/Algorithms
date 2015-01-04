@@ -1,6 +1,33 @@
 (function() {
 	Algorithms = function() {
+		self = this; 
+		var that = this;
+		this.forChaining = function() {
+			return that;
+		}
+	}
 
+	var setMemoArray = function (l1, l2) {
+		var L = [];
+		for(var i = 0; i <= l1; i++) {
+			L[i] = [];
+			for(var j = 0; j <= l2; j++) {
+				L[i][j] = -1;
+				if(i == 0 || j == 0) {
+					L[i][j] = 0;
+				}					
+			}	
+		}
+		return L;
+	}
+	function max(x, y) {
+		if(x > y) {
+			return x;
+		}
+		return y;
+	}
+	Algorithms.prototype.forProtoChaining = function() {
+		return self;
 	}
 	var convertToType = function (oArray, type) {
 		var returnValue = oArray;
@@ -34,6 +61,47 @@
 			}
 		});
 		return convertToType(finalArray, typeof(arguments[0]));
+	}
+
+	Algorithms.prototype.longestCommonSubsequence = function () {
+		str1 = arguments[0],
+		str2 = arguments[1],
+		l1 = str1.length,
+		l2 = str2.length;
+		L = setMemoArray(l1, l2);
+		var str = '';
+		var lcs = LCS(l1, l2);
+
+		var i = l1, j = l2;
+		while(i >= 0 && j >= 0) {
+			if(str1[i - 1] == str2[j - 1]) {
+				str += str1[i - 1];
+				i--;
+				j--;
+			}
+			else if(L[i - 1][j] >= L[i][j - 1]) {
+				i--;
+			}
+			else {
+				j--;
+			}
+		}
+		return str.split("").reverse().join("");
+	}
+
+	var LCS = function (i, j) {
+		if(L[i][j] < 0) {
+				if(str1[i - 1] == undefined || str2[j - 1] == undefined) {
+					L[i][j] = 0;
+				}
+				else if(str1[i - 1] == str2[j - 1]) {
+				    L[i][j] = 1 + LCS(i - 1, j - 1);
+				}
+				else {
+					L[i][j] = max(LCS(i, j - 1), LCS(i - 1, j));	
+				}	
+			}			
+		return L[i][j];
 	}
 
 	Algorithms.prototype.maxOccurredCharacter = function () {
