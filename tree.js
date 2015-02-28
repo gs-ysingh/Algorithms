@@ -92,3 +92,52 @@ if(findPath(root, path, 7)) {
 
 var lca = findLCA(root, n1, n2);
 console.log('LCA of n1 and n2 = ' + lca);
+
+function mirrorImage(root) {
+	if(root == null) {
+		return;
+	}
+	else {
+		mirrorImage(root.left);
+		mirrorImage(root.right);	
+
+		var temp = root.left;
+		root.left = root.right;
+		root.right = temp;		
+	
+	}
+}
+mirrorImage(root);
+console.log('Mirror Image of tree ' + root);
+
+//Vertical Sum
+//Max and Sum 
+
+function findMax(root) {
+	if(root == null) {
+		return 0;
+	}		
+	return Math.max(Math.max(root.data, findMax(root.left)), 
+		Math.max(root.data, findMax(root.right)));
+}
+
+console.log('Max element in binary tree ' + findMax(root););
+
+function findSumOfTree(root) {
+	if (root == null) {
+		return 0;
+	}
+	return root.data + 
+			findSumOfTree(root.left) + 
+			findSumOfTree(root.right);
+}
+
+console.log('Sum of binary tree ' + findSumOfTree(root));
+
+function numberOfNodes(root) {
+	if(root == null) {
+		return 0;
+	}
+	return numberOfNodes(root.left) + 1 + numberOfNodes(root.right);
+}
+console.log('number of nodes in binary tree ' + numberOfNodes(root));
