@@ -108,7 +108,8 @@ function mirrorImage(root) {
 	}
 }
 mirrorImage(root);
-console.log('Mirror Image of tree ' + root);
+console.log('Mirror Image of tree ');
+console.log(root);
 
 //Vertical Sum
 //Max and Sum 
@@ -121,7 +122,7 @@ function findMax(root) {
 		Math.max(root.data, findMax(root.right)));
 }
 
-console.log('Max element in binary tree ' + findMax(root););
+console.log('Max element in binary tree ' + findMax(root));
 
 function findSumOfTree(root) {
 	if (root == null) {
@@ -141,3 +142,12 @@ function numberOfNodes(root) {
 	return numberOfNodes(root.left) + 1 + numberOfNodes(root.right);
 }
 console.log('number of nodes in binary tree ' + numberOfNodes(root));
+
+function heightOfTree(root) {
+	if(root == null) {
+		return 0;
+	}
+	return Math.max(1 + heightOfTree(root.left), 1 + heightOfTree(root.right));
+}
+
+heightOfTree(root);
