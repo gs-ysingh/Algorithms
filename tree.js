@@ -246,5 +246,82 @@ function rootToLeafPath(root, path) {
 
 rootToLeafPath(root, path);
 
+function countLeafNodes(root) {
+	var queue = [];
+	queue.enQueue(root);
+	var count = 0;
+	while(!queue.isEmptyQueue()) {
+		var tmp = queue.deQueue();
+		if(!tmp.left && !tmp.right) {
+			count++;
+		}
+		if(tmp.left) {
+			queue.enQueue(tmp.left);
+		}
+		if(tmp.right) {
+			queue.enQueue(tmp.right);
+		}
+	}
+	return count;
+}
+console.log("Number of leaf nodes: " + countLeafNodes(root));
 
+//Binary search Tree
 
+var root = new newNode(8);
+root.left = new newNode(3);
+root.right = new newNode(10);
+root.left.left = new newNode(1);
+root.left.right = new newNode(6);
+root.right.left = new newNode(9);
+root.right.right = new newNode(14);
+
+function isBST(root, min, max) {
+	if(root == null) {
+		return true;
+	} 	
+	else {
+		return root.data > min && root.data < max &&
+		isBST(root.left, min, root.data) &&
+		isBST(root.right, root.data, max);
+	}		
+}
+
+console.log('Is root tree binary search tree: ' + isBST(root, -1, 100));
+console.log('Is root1 tree binary search tree: ' + isBST(root1, -1, 100));
+
+function spiralTree(root) {
+	//since array in javascript is already a stack
+	var stack1 = [];
+	var stack2 = [];
+	stack1.push(root);
+	var leftToRight = 1;
+	while(stack1.length != 0) {
+		var tmp = stack1.pop();
+		console.log(tmp.data);
+		
+		if(leftToRight) {
+			if(tmp.left) {
+				stack2.push(tmp.left);
+			}
+			if(tmp.right) {
+				stack2.push(tmp.right);
+			}
+		}
+		else {
+			if(tmp.right) {
+				stack2.push(tmp.right);
+			}
+			if(tmp.left) {
+				stack2.push(tmp.left);
+			}
+		}
+		if(stack1.length == 0) {
+			leftToRight = 1 - leftToRight;
+			var swap = stack1;
+			stack1 = stack2;
+			stack2 = swap;
+		}		
+	}
+}
+spiralTree(root);
