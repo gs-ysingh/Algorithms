@@ -325,3 +325,59 @@ function spiralTree(root) {
 	}
 }
 spiralTree(root);
+
+path = [];
+
+function diameterOfTree(root, path, max) {
+	if(root == null) {
+		return;
+	}
+	path.push(root.data);	
+	
+	if(root.left == null && root.right == null) {
+		if(path.length > max.val) {
+			max.val = path.length;
+		}
+	}	
+	diameterOfTree(root.left, path, max);
+	diameterOfTree(root.right, path, max);
+
+	path.pop();
+}
+
+var max = {};
+max.val = 0;
+diameterOfTree(root1, path, max);
+
+console.log('Diameter of Tree/Nodes in longest path: ' + max.val);
+
+//check if tree satisfies the children sum property
+function isSumTree(root) {
+	var ls = 0, rs = 0;
+	if(root == null || (root.left == null && root.right == null)) {
+		return true;
+	}
+	else {
+		if(root.left != null) {
+			ls = root.left.data;
+		}
+		if(root.right != null) {
+			rs = root.right.data;	
+		}
+		return (
+			root.data == ls + rs &&
+			isSumTree(root.left) &&
+			isSumTree(root.right)
+		);
+	}	
+}
+
+var rootChild = new newNode(10);
+rootChild.left = new newNode(8);
+rootChild.right = new newNode(2);
+rootChild.left.left = new newNode(3);
+rootChild.left.right = new newNode(5);
+rootChild.right.left = new newNode(2);
+
+
+console.log('rootChild isSumTree: ' + isSumTree (rootChild));
