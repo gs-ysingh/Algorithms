@@ -1,3 +1,4 @@
+//function to create a node for tree
 function newNode(value) {
 	var tmp = {};
 	tmp.data = value;
@@ -6,6 +7,8 @@ function newNode(value) {
 	return tmp;
 }
 
+
+//inorder tree traversal using recursion
 function inOrder(root) {
 	if(root == null) {
 		return;
@@ -15,6 +18,7 @@ function inOrder(root) {
 	inOrder(root.right);
 }
 
+//preorder tree traversal using recursion
 function preOrder(root) {
 	if(root == null) {
 		return;
@@ -24,6 +28,7 @@ function preOrder(root) {
 	preOrder(root.right);
 }
 
+//postorder tree traversal using recursion
 function postOrder(root) {
 	if(root == null) {
 		return;
@@ -33,20 +38,27 @@ function postOrder(root) {
 	console.log(root.data);
 }
 
+
+//enqueue operation on array - add element at the end
 Array.prototype.enQueue = function() {
 	this.push(arguments[0]);
 };
 
+
+//dequeue operation on array - remove first element
 Array.prototype.deQueue = function() {
 	if(this.length > 0) {
 		return this.shift();
 	}
 };
 
+//if queue length is 0, then it's empty
 Array.prototype.isEmptyQueue = function() {
 	return this.length == 0;
 };
 
+
+//level order traversal of tree
 function levelOrder(root, queue) {
 	queue.enQueue.call(queue, root);
 	while(!queue.isEmptyQueue.call(queue)) {
@@ -61,7 +73,9 @@ function levelOrder(root, queue) {
 	}
 }
 
-
+//find the path from root to a given node
+//function to return true or false if there is a path exists
+//while keeping path array updated
 function findPath(root, path, value) {
 	if(root == null) {
 		return false;
@@ -83,6 +97,10 @@ function findPath(root, path, value) {
 	return false;	
 }
 
+//LCA (least common ancestor) - find a node that contains both the given node of tree
+//Remember this is binary tree
+//We already got the path n1 and n2 using findPath function from root to given node
+//Check in n1 and n2 when there value not match, node before that is LCA
 function findLCA(root, n1, n2) {
 	for(var i = 0; i < n1.length && i < n2.length; i++) {
 		if(n1[i] != n2[i]) {
@@ -126,6 +144,9 @@ if(findPath(root, path, 7)) {
 var lca = findLCA(root, n1, n2);
 console.log('LCA of n1 and n2 = ' + lca);
 
+
+//do a post order traveral that will allow child node to visit first
+//then swap the left and right child
 function mirrorImage(root) {
 	if(root == null) {
 		return;
@@ -144,8 +165,6 @@ mirrorImage(root);
 console.log('Mirror Image of tree ');
 console.log(root);
 
-//Vertical Sum
-//Max and Sum 
 
 function findMax(root) {
 	if(root == null) {
@@ -231,6 +250,7 @@ function deleteTree(root) {
 
 path = [];
 
+//similar problem to find the path
 function rootToLeafPath(root, path) {
 	if(root == null) {
 		return;
@@ -287,11 +307,18 @@ function isBST(root, min, max) {
 	}		
 }
 
+//change the min and max value based on overall min and max value of tree
 console.log('Is root tree binary search tree: ' + isBST(root, -1, 100));
 console.log('Is root1 tree binary search tree: ' + isBST(root1, -1, 100));
 
+
+//maintain 2 stack
+//push in first stack and after poping push it's left and right child in another stack
+//order of pushing will be left to right in second stack
+//swap the stack if first stack length == 0 and also order to right to left
 function spiralTree(root) {
-	//since array in javascript is already a stack
+	//since array in javascript is already a stack, so using array itself
+	//rather than creating stack 
 	var stack1 = [];
 	var stack2 = [];
 	stack1.push(root);
@@ -328,6 +355,9 @@ spiralTree(root);
 
 path = [];
 
+
+//Number of nodes on the Longest path between two leaves in the tree
+//This is wrong
 function diameterOfTree(root, path, max) {
 	if(root == null) {
 		return;
@@ -352,6 +382,7 @@ diameterOfTree(root1, path, max);
 console.log('Diameter of Tree/Nodes in longest path: ' + max.val);
 
 //check if tree satisfies the children sum property
+//since, we need to process left and right node at so else condition is required
 function isSumTree(root) {
 	var ls = 0, rs = 0;
 	if(root == null || (root.left == null && root.right == null)) {
@@ -381,3 +412,121 @@ rootChild.right.left = new newNode(2);
 
 
 console.log('rootChild isSumTree: ' + isSumTree (rootChild));
+
+function inOrderwithoutRecursion(root) {
+	var stack = [];
+	do {
+		while(root) {
+			stack.push(root);
+			root = root.left;
+		}		
+		var root = stack.pop();
+		console.log(root.data);
+		if(root) {
+			root = root.right;	
+		}
+	} while(stack.length !== 0 || root)
+	
+}
+
+function findInBST(root, value) {
+	if(root == null) {
+		return false;
+	}
+	else if(root.data == value) {
+		return true;
+	}
+	else if(root.data > value) {
+		return findInBST(root.left, value);
+	}
+	else if(root.data < value) {
+		return findInBST(root.right, value);
+	}
+}
+
+
+function findInBSTNonRecursive(root, value) {
+	while(root) {
+		if(root.data == value) {
+			return true;
+		}
+		else if(root.data > value) {
+			root = root.left;
+		}
+		else if(root.data < value) {
+			root = root.right;
+		}
+
+	}
+	return false;
+}
+console.log("Is 10 present in root: " + findInBST(root, 10));
+
+console.log("Is 10 present in root: " + findInBSTNonRecursive(root, 10));
+
+function inOrderSuccessor(root, value) {
+	//first find the node
+	var stack = []
+	var found = 0;
+	while(root) {
+		stack.push(root);
+		if(root.data == value) {
+			found = 1 - found;
+			break;
+		}
+		else if(root.data > value) {
+			root = root.left;
+		}
+		else if(root.data < value) {
+			root = root.right;
+		}
+	}
+	if(!found) {
+		console.log('Node not found');
+		return;
+	}
+	//Logic to find the Successor
+
+	if(root.right) {
+		root = root.right;
+		//find min of right child
+		while(root.left) {
+			root = root.left;
+		}
+		return root.data;
+	}
+	else {
+		//Move to parent till node is left child
+		//It's parent is in order successor
+
+		var currentNode = stack.pop();
+		var len = stack.length;
+		var top = stack[len - 1];
+
+		while(top && top.left && top.left.data != currentNode.data && stack.length > 0) {
+			var currentNode = stack.pop();
+			len = stack.length;
+			top = stack[len - 1];	
+		}
+
+		return top ? top.data : "No Successor exists since it's max node";
+	}
+
+}
+
+
+// //Algo to Solve
+
+// BST:-
+// 3. Inserting and deleting an node in binary search tree
+// 4. Find LCA of BST 
+// 5. Convert BST to circular DLL
+// 6. Convert an array to BST
+// 7. Find kth smallest element in BST
+// 8. Print elements of BST between range K1 and K2
+// 9. Convert a sorted list to height balanced BST
+
+// Binary Tree:-
+// 1. Non-recursive method for the post order and pre order
+// 2. If path exists with given sum
+// 3. Vertical Sum problem
