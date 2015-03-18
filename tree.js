@@ -515,11 +515,120 @@ function inOrderSuccessor(root, value) {
 }
 
 
+function insertInBST(root, value) {
+	if (root == null) {
+		return new newNode(value);
+	}
+	
+	if(root.data > value) {
+		root.left = insertInBST(root.left, value);
+	}
+	else {
+		root.right = insertInBST(root.right, value);
+	}
+	return root;
+}
+
+function deleteFromBST(root, value) {
+	var stack = []
+	var found = 0;
+	var original = root;
+	//find the node to be deleted
+	while(root) {
+		stack.push(root);
+		if(root.data == value) {
+			found = 1 - found;
+			break;
+		}
+		else if(root.data > value) {
+			root = root.left;
+		}
+		else if(root.data < value) {
+			root = root.right;
+		}
+	}
+
+	if(!found) {
+		console.log('Node not found');
+		return;
+	}
+	//when node is leaf node
+	if(!root.left && !root.right) {			
+		//if 1 node is left
+		if(stack.length == 1) {
+			delete root
+			return;
+		}
+
+		var currentNode = stack.pop();
+		var root = stack.pop();
+
+		if(root.right && root.right.data == currentNode.data) {
+			root.right = null;
+		}
+		else {
+			root.left = null;
+		}
+	}
+	//when left or right node is not present
+	else if((root.left && !root.right) ||  (!root.left && root.right)) {
+		var leftNodePresent = root.left && !root.right ? 1 : 0;
+		var currentNode = stack.pop();
+		//if left node is present and right node is not present
+		//copy left node's value to current node and delete left node
+		if(leftNodePresent) {
+			currentNode.data = currentNode.left.data;
+			currentNode.left = null;
+		}
+		else {
+			currentNode.data = currentNode.right.data;
+			currentNode.right = null;
+		}
+	}
+
+	//when both left and right node is present
+	//find the inorder successor of node and copy that value to current node
+	//delete the inorder successor
+	else if(root.left && root.right) {
+		root.data = minValueBST(root.right);
+		//delete inorder successor
+		var tmp = root.data;
+		root.right = deleteFromBST(root.right, tmp);
+	}
+	return root;
+}
+
+function minValueBST(root) {
+	var val;
+	while(root) {
+		val = root.data;
+		root = root.left;
+	}
+	return val;
+}
+
+
+function lcaBST(root, start, end) {
+	if(root == null) {
+		return false;
+	}
+	if(root.data > start && root.data < end) {
+		return root.data;
+	}
+
+	else if(root.data > start && root.data > end) {
+		return lcaBST(root.left, start, end);
+	}
+	else if(root.data < start && root.data < end) {
+		return lcaBST(root.right, start, end);
+	}
+}
+
+console.log('LCA of 6 and 10: ' + lcaBST(root, 6, 10));
+
 // //Algo to Solve
 
 // BST:-
-// 3. Inserting and deleting an node in binary search tree
-// 4. Find LCA of BST 
 // 5. Convert BST to circular DLL
 // 6. Convert an array to BST
 // 7. Find kth smallest element in BST
