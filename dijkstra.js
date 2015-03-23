@@ -1,3 +1,5 @@
+//execute - nodejs dijkstra.js dijkstraData.txt
+
 var filename = process.argv[2];
 fs = require('fs'); 
 var sGraph = {};
