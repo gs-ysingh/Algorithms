@@ -1,0 +1,73 @@
+<html>
+   <head>
+      <script>
+		function quickSort(sArray, p, r) {			
+			var sCount = 0;
+			var q = 0;
+			if(p < r) {
+				q = partition(sArray, p, r);
+				sCount = q - p + quickSort(sArray, p, q);				
+				sCount += (r - q - 1) + quickSort(sArray, q + 1, r);				
+			}
+			return sCount;
+		}
+
+		function partition(sArray, p, r) {			
+			var temp = 0;
+			
+			temp = sArray[r - 1];
+			sArray[r - 1] = sArray[p];
+			sArray[p] = temp;				
+			
+			var pivot = sArray[p]; 
+			var i = p + 1;	
+			
+			for(var j = p + 1; j < r; j++) {
+				if(sArray[j] <= pivot) {
+					temp = sArray[j];
+					sArray[j] = sArray[i];
+					sArray[i] = temp;
+					i++;
+				}
+			}
+			temp = sArray[p];
+			sArray[p] = sArray[i - 1];
+			sArray[i - 1] = temp;
+			return i - 1;
+		}
+
+         
+         function readTextFile(file)
+         {
+         	var pArray = [];
+         	var rawFile = new XMLHttpRequest();
+         	rawFile.open("GET", file, false);
+         	rawFile.onreadystatechange = function ()
+         	{
+         		if(rawFile.readyState === 4)
+         		{
+         			if(rawFile.status === 200 || rawFile.status == 0)
+         			{
+         				var allText = rawFile.responseText;
+         				pArray = allText.split("\n");						
+         				
+         				var iCounter = 0;
+         				
+         				for(iCounter = 0; iCounter < pArray.length; iCounter++) {
+         					pArray[iCounter] = parseInt(pArray[iCounter]);							
+         				}
+         				var i = 0,
+         					j = pArray.length - 1;
+         				var x = quickSort(pArray, i, j);
+						alert(x);         											
+         			}
+         		}
+         	}	
+         	rawFile.send(null);
+         }
+         readTextFile("input.txt");
+      </script>
+   </head>
+   <body>
+   </body>
+</html>

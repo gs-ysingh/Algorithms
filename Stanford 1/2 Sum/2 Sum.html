@@ -1,0 +1,83 @@
+<html>
+   <head>
+      <script>	
+	  // This code does not work for 1 million values
+	 function uniq(ary) {
+		var prim = {"boolean":{}, "number":{}, "string":{}}, obj = [];
+
+			return ary.filter(function(x) {
+				var t = typeof x;
+				return (t in prim) ? 
+					!prim[t][x] && (prim[t][x] = 1) :
+					obj.indexOf(x) < 0 && obj.push(x);
+			});
+		}
+	 function readTextFile(file)
+         {
+         	var pArray = [];
+			var sArray = [];			
+         	var rawFile = new XMLHttpRequest();
+         	rawFile.open("GET", file, false);
+         	rawFile.onreadystatechange = function ()
+         	{
+         		if(rawFile.readyState === 4)
+         		{
+         			if(rawFile.status === 200 || rawFile.status == 0)
+         			{
+         				var allText = rawFile.responseText;
+         				pArray = allText.split("\n");	
+						var xValue= 0;
+						var target = [];
+						for(var iCounter = 0; iCounter < pArray.length; iCounter++) {
+							pArray[iCounter] = parseInt(pArray[iCounter]);
+						}
+						pArray.sort(function(a, b){return a-b});	
+						pArray = uniq(pArray);					
+						debugger;
+						for(var iCounter = 0; iCounter < pArray.length; iCounter++) {
+							l = 0;
+							r = pArray.length - 1; 
+							min = -10000 - pArray[iCounter];
+							max = 10000 - pArray[iCounter];
+							var lower = 0, upper = 0;
+							while(l < r)
+							{
+								 q = Math.floor(l + (r - l) / 2);								 
+								 if(pArray[q] <= min)
+									  l = q + 1;
+								 else 
+									  r = q;
+							}    
+							lower = l;
+							l = 0;
+							r = pArray.length - 1;
+							while(l < r)
+							{
+								 q = Math.floor(l + (r - l) / 2);						 
+								 if(pArray[q] >= max)
+									  r = q;
+								 else 
+									l = q + 1;
+							}							
+							upper = l;
+							while(lower < upper) {
+								xValue = pArray[iCounter] + pArray[lower];
+								if(target.indexOf(xValue) == -1) {									
+									target.push(xValue);									
+								}
+								lower++;							
+							}							
+         				}
+						alert(target.length);
+					}
+         		}
+         	}	
+         	rawFile.send(null);
+         }
+         readTextFile("sum.txt"); 
+		
+      </script>
+   </head>
+   <body>
+   </body>
+</html>

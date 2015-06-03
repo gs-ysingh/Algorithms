@@ -1,0 +1,90 @@
+<html>
+   <head>
+      <script>
+         function mergeSort(sArray, p, r) {   
+         	var sCount = 0; 
+         	if (p < r) {	
+         		var q = Math.floor(p + (r - p) / 2);
+         		sCount = mergeSort(sArray, p, q);
+         		sCount += mergeSort(sArray, q + 1, r);
+         		sCount += merge(sArray, p, q, r);
+         	}	
+         	return sCount;	
+         }
+         function merge(sArray, p, q, r) {	
+         	var n1 = q - p + 1;
+         	var n2 = r - q;
+         	var oArray = [];
+         	var sLeft = [],
+         		sRight = [];
+         	
+         	var inCounter = 0;
+         	for (var iCounter = 0; iCounter < n1; iCounter++) {
+         		sLeft[iCounter] = sArray[iCounter + p];
+         	}
+         	for (var jCounter = 0; jCounter < n2; jCounter++) {
+         		sRight[jCounter] = sArray[jCounter + q + 1];
+         	}
+         	var i = 0,
+         		j = 0,
+         		k = p;
+         	while (i < n1 && j < n2) {
+         		if (sLeft[i] <= sRight[j]) {
+         			sArray[k] = sLeft[i];
+         			i++;
+         		} 
+         		else {
+         			sArray[k] = sRight[j];
+         			inCounter += n1 - i;
+         			j++;
+         		}
+         		k++;
+         	}
+         
+         	while (i < n1) {
+         		sArray[k] = sLeft[i];
+         		i++;
+         		k++;
+         	}
+         	while (j < n2) {
+         		sArray[k] = sRight[j];
+         		j++;
+         		k++;
+         	}	
+         	return inCounter;
+         }
+         
+         function readTextFile(file)
+         {
+         	var pArray = [];
+         	var rawFile = new XMLHttpRequest();
+         	rawFile.open("GET", file, false);
+         	rawFile.onreadystatechange = function ()
+         	{
+         		if(rawFile.readyState === 4)
+         		{
+         			if(rawFile.status === 200 || rawFile.status == 0)
+         			{
+         				var allText = rawFile.responseText;
+         				pArray = allText.split("\n");						
+         				
+         				var iCounter = 0;
+         				
+         				for(iCounter = 0; iCounter < pArray.length; iCounter++) {
+         					pArray[iCounter] = parseInt(pArray[iCounter]);							
+         				}
+         				var i = 0,
+         					j = pArray.length - 1;
+         				var x = mergeSort(pArray, i, j);
+         				alert(x); 							
+         			}
+         		}
+         	}	
+         	rawFile.send(null);
+         }
+         readTextFile("input.txt");
+      </script>
+   </head>
+   <body>
+   </body>
+</html>

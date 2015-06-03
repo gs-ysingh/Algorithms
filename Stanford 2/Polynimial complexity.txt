@@ -1,0 +1,71 @@
+P - Problems that can be solved in polynomial time
+EXP - Problems that can be solved in exponential time
+R - Problems that can be solved in finite time
+NP (non deterministic problems) - 
+decision problems that can be solved in polynomial time with lucky guess
+or problem that can be verified in polynomial time.
+
+Every NP problem can be solved in exponential problem.
+
+---------P -------NP-----EXP-----------R-----------------
+
+Problems after R are unsolvable
+
+Examples - 
+
+Negative weight cycle detection  - P time
+N*N chess problem - who's gonna win - EXP time 
+Tetris - between P and EXP (it's NP) - Can the position/solution be checked
+Halting problem - not R, so there is no way to solve
+
+Most decision problem does not belong to R
+
+Output of all the program - binary string - A natural number (Natural number)
+All decision problems - infinite set of string (Real number)
+
+	f(input) - 1 or 0
+	input - natural number
+
+So, Real number > Natural - there are way more problems than program to solve them.
+
+Does P equal to NP:
+
+P ! = NP because you cannot engineer the luck
+
+NP Hard - as hard every problem belong to NP
+NP complete - It's NP hard and NP then it's NP complete (It's NP intersection It's NP Hard )
+
+Tetris problem - It's belong to NP and NP-hard
+
+Reductions: A ---> B
+Convert a problem to a problem that you know how to solve
+
+
+UnWeighted shortest path - Dijkstra's algo with weight 1
+min product path - shortest weight with logs
+longest path  - shortest path with weigth negative
+
+
+Travelling sales person - shorest path visits all the vertex
+Longest common subsequence with n string
+Sudoku
+SAT  - (x or y) and x - is it possible to make it true
+Shortest path in 3-D is NP complete
+Knapsack problem is NP complete
+Cycle free shortest path in negative edge cycle graph
+
+
+How to solve a problem that does not have optimal solution:
+First prove that your problem is NP 
+1. Find a known NP-Complete problem
+2. Reduce your NP problem to 1st algo hence your algo is also NP-complete
+
+
+
+
+
+
+
+
+
+

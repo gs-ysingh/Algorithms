@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <script>		 
+		 var sGraph = {
+		 };
+		 var distance = [];
+		 var visited = [];
+		 var queue = [];
+		 var total = 200;
+		 function dijkstra() {
+			
+			for(var iCounter = 1; iCounter <= total; iCounter++) {
+				visited[iCounter] = false;
+				distance[iCounter] = 100000000;
+			}	
+			distance[1] = 0;
+			visited[1] = true;
+			var index = 1;
+			queue.push(1);		
+			
+			while(queue.length <= total) {
+				i = 0;
+				var min = 100000000;
+				for(var i = 0; i < queue.length; i++) {
+					iCounter = queue[i];				
+					for(var jCounter = 0; jCounter <= sGraph[iCounter].data.length; jCounter++) {
+						var weight = sGraph[iCounter].weight[jCounter];
+						var data = sGraph[iCounter].data[jCounter];
+						if(visited[data] == false && parseInt(weight) + parseInt(distance[iCounter]) < parseInt(min)) {
+							min = parseInt(weight) + parseInt(distance[iCounter]);
+							index = parseInt(data);
+						}					
+					}			
+				}
+				visited[index] = true;				
+				distance[index] = parseInt(min);
+				queue.push(index);
+			}			
+		}
+         function readTextFile(file)
+         {
+         	var pArray = [];
+			var sArray = [];			
+         	var rawFile = new XMLHttpRequest();
+         	rawFile.open("GET", file, false);
+         	rawFile.onreadystatechange = function ()
+         	{
+         		if(rawFile.readyState === 4)
+         		{
+         			if(rawFile.status === 200 || rawFile.status == 0)
+         			{
+         				var allText = rawFile.responseText;
+         				pArray = allText.split("\n");						
+         				
+         				var iCounter = 0, jCounter = 0;
+						var weight = 0, vertex = 0;
+   
+         				for(iCounter = 0; iCounter < pArray.length - 1; iCounter++) {
+         					sArray = pArray[iCounter].split("\t");
+							sGraph[iCounter + 1] = {
+								"data": [],
+								"weight": []
+							};
+							for(jCounter = 1; jCounter < sArray.length - 1; jCounter++) {
+								sGraph[iCounter + 1].data.push(sArray[jCounter].split(",")[0]);
+								sGraph[iCounter + 1].weight.push(sArray[jCounter].split(",")[1]);
+							}
+         				}
+						dijkstra();
+						console.log(distance[7]+","+distance[37]+","+distance[59]+","+distance[82]+","+distance[99]+","+distance[115]+","+distance[133]+","+distance[165]+","+distance[188]+","+distance[197]);	
+												
+         			}
+         		}
+         	}	
+         	rawFile.send(null);
+         }
+         readTextFile("dijkstraData.txt");
+      </script>
+   </head>
+   <body>
+   </body>
+</html>
