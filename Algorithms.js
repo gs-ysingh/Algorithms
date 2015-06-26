@@ -6,7 +6,6 @@
 			return that;
 		}
 	}
-
 	var setMemoArray = function (l1, l2) {
 		var L = [];
 		for(var i = 0; i <= l1; i++) {
