@@ -1,4 +1,6 @@
 (function() {
+	//public function 
+	//create instance of object and call function declared using prototype
 	Algorithms = function() {
 		self = this; 
 		var that = this;
@@ -6,6 +8,8 @@
 			return that;
 		}
 	}
+	//Private function can be called in public function declared using prototype
+	//or without var
 	var setMemoArray = function (l1, l2) {
 		var L = [];
 		for(var i = 0; i <= l1; i++) {
@@ -25,6 +29,7 @@
 		}
 		return y;
 	}
+	//prototypes available for each instance
 	Algorithms.prototype.forProtoChaining = function() {
 		return self;
 	}
